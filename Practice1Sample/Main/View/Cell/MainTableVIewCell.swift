@@ -52,8 +52,11 @@ final class MainTableViewCell: UITableViewCell {
         super.prepareForReuse()
         isShowingBack = false
         
-        removeAllSubviews()
-        setup()
+//        there is probably no need for removing and setupping everything for reuse, we can just flip the card
+        
+//        removeAllSubviews()
+//        setup()
+        
     }
     
     private func setup() {
@@ -71,6 +74,8 @@ final class MainTableViewCell: UITableViewCell {
         
         frontView.addSubview(cityTitleLabel)
         backView.addSubview(cityImageView)
+        
+        //one of the bugs is over here with the views, but, couldn't figure it out
     }
     
     private func makeConstraints() {
@@ -97,15 +102,19 @@ final class MainTableViewCell: UITableViewCell {
         let singleTap = UITapGestureRecognizer(target: self, action: #selector(flip))
         singleTap.numberOfTapsRequired = 1
         containerView.addGestureRecognizer(singleTap)
+        containerView.isUserInteractionEnabled = true
     }
     
     @objc public func flip() {
+        //in case we switch frontView and backView, it works well, but it shows image first and title on the other side
+        //however, in this case, subview cityImageView lays on the top of both sides
         let toView = isShowingBack ? frontView : backView
         let fromView = isShowingBack ? backView : frontView
         UIView.transition(from: fromView, to: toView, duration: 1, options: .transitionFlipFromRight, completion: nil)
         isShowingBack.toggle()
     }
     
+    //if i'm not mistakes, there is no need for this function
     private func removeAllSubviews() {
         containerView.subviews.forEach { $0.removeFromSuperview() }
         frontView.subviews.forEach { $0.removeFromSuperview() }

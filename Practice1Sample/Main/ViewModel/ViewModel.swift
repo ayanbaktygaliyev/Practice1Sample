@@ -7,6 +7,7 @@ protocol ViewModelProtocol {
 
 class ViewModel: ViewModelProtocol {
     var sdaads = false
+    // ?
     var cities: [City] = []
     
     init() {
@@ -15,6 +16,6 @@ class ViewModel: ViewModelProtocol {
     
      func didSelect(city: City) {
          guard let firstIndex = cities.firstIndex(where: { $0.id == city.id }) else { return }
-        cities[firstIndex].isFlipped = city.isFlipped
+        cities[firstIndex].isFlipped = !city.isFlipped
     }
 }

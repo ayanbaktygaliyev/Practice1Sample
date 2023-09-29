@@ -17,10 +17,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let viewModel = ViewModel()
         let vc = ViewController()
         vc.viewModel = viewModel
-        let navVC = UINavigationController(rootViewController: vc)
+        //in this application, there is no need for NavigationController, as we have only 1 page, vc
+//        let navVC = UINavigationController(rootViewController: vc)
         
         window = UIWindow(frame: UIScreen.main.bounds)
-        window?.rootViewController = navVC
+        window?.rootViewController = vc
+        //as I have removed NavigationController, changed the rootViewController to vc, as a main ViewController
         window?.makeKeyAndVisible()
         
         return true

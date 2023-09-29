@@ -12,7 +12,7 @@ class ViewController: UIViewController {
     
     //MARK: - Properties
     var viewModel: ViewModelProtocol?
-    var isFlippet = false
+    var isFlipped = false
     
     //MARK: - View
     private lazy var mainTableView: UITableView = {
@@ -68,15 +68,14 @@ extension ViewController: UITableViewDataSource {
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        guard let viewModel = viewModel else {return 0}
-        
-        return viewModel.cities.count
+
+        return 1        //there is only one section we need for cities
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let viewModel = viewModel else { return UITableViewCell() }
         
-        let model = viewModel.cities[indexPath.section]
+        let model = viewModel.cities[indexPath.row] //changed from indexPath.count into indexPath.row, as model was displaying each cell indexPath.count times, which is 10 in our case
         
         let cell: MainTableViewCell = tableView.dequeueReusableCell(for: indexPath)
         cell.configure(model: model)
@@ -87,6 +86,12 @@ extension ViewController: UITableViewDataSource {
 
 //MARK: - UITableViewDelegate
 extension ViewController: UITableViewDelegate {
+    //called didSelect function from the ViewModel, as it was implemented, but not called
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let model = viewModel?.cities[indexPath.row] else {return}
+        viewModel?.didSelect(city: model)
+    }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 250
     }
