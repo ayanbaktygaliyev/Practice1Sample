@@ -108,18 +108,18 @@ final class MainTableViewCell: UITableViewCell {
     @objc public func flip() {
         //in case we switch frontView and backView, it works well, but it shows image first and title on the other side
         //however, in this case, subview cityImageView lays on the top of both sides
-        let toView = isShowingBack ? frontView : backView
-        let fromView = isShowingBack ? backView : frontView
+        let toView = isShowingBack ? backView : frontView
+        let fromView = isShowingBack ? frontView : backView
         UIView.transition(from: fromView, to: toView, duration: 1, options: .transitionFlipFromRight, completion: nil)
         isShowingBack.toggle()
     }
     
-    //if i'm not mistakes, there is no need for this function
-    private func removeAllSubviews() {
-        containerView.subviews.forEach { $0.removeFromSuperview() }
-        frontView.subviews.forEach { $0.removeFromSuperview() }
-        backView.subviews.forEach { $0.removeFromSuperview() }
-    }
+    //there is no need for this function
+//    private func removeAllSubviews() {
+//        containerView.subviews.forEach { $0.removeFromSuperview() }
+//        frontView.subviews.forEach { $0.removeFromSuperview() }
+//        backView.subviews.forEach { $0.removeFromSuperview() }
+//    }
     
     public func configure(model: City) {
         isShowingBack = model.isFlipped
